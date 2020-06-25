@@ -8,19 +8,19 @@
     </v-app-bar>
 
     <v-content>
-      <HelloWorld/>
+      <Table/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/Table';
+import Table from './components/Table';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    Table,
   },
 
   data: () => ({

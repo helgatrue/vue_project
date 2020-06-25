@@ -5,9 +5,12 @@
             :items="desserts"
             sort-by="calories"
             class="elevation-1"
+            :hide-default-footer="true"
     >
       <template v-slot:top>
-        <v-toolbar flat color="white">
+        <v-toolbar flat color="white"
+
+        >
           <v-toolbar-title>Table</v-toolbar-title>
           <v-divider
                   class="mx-4"
@@ -37,9 +40,12 @@
                 class="mb-2"
                 v-bind="attrs"
                 v-on="on"
-                @click="editItem(item)"
+                @click="openMessage(item)"
         >More</v-btn>
       </template>
+
+
+
     </v-data-table>
   </v-container>
 </template>
@@ -119,10 +125,18 @@
         ]
       },
 
-      editItem (item) {
+      openMessage (item) {
         this.editedIndex = this.desserts.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog = true
+      },
+
+      close () {
+        this.dialog = false
+        this.$nextTick(() => {
+          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedIndex = -1
+        })
       },
 
       save () {
