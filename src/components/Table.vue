@@ -33,7 +33,7 @@
                 </v-toolbar>
             </template>
             <template v-slot:item.actions="{ item }">
-                <v-btn
+                <v-btn :disabled="isDisabled ? true : false"
                         color="green darken-1"
                         dark
                         class="mb-2"
@@ -50,6 +50,9 @@
 <script>
     export default {
         data: () => ({
+            data: {
+                disabled: 159,
+            },
             dialog: false,
             headers: [
                 {
@@ -86,6 +89,10 @@
             formTitle() {
                 return this.editedIndex === -1 ? 'Сообщение об ошибке' : 'Сообщение об ошибке'
             },
+            isDisabled(dessert) {
+                if (dessert.calories === 159) return true
+                    else return false
+            }
         },
 
         watch: {
