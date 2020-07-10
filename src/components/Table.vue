@@ -32,10 +32,9 @@
                     </v-dialog>
                 </v-toolbar>
             </template>
-            <template v-slot:item.actions="{ item }">
-             <span v-if=item.status>
-                <v-btn
-                       color="green darken-3"
+            <template v-slot:item.info="{ item }">
+                <v-btn v-if=!item.status
+                       color="orange darken-1"
                        dark
                        class="mb-2"
                        v-bind="attrs"
@@ -43,7 +42,6 @@
                        @click="openMessage(item)"
                 >More
                 </v-btn>
-             </span>
             </template>
         </v-data-table>
     </v-container>
@@ -58,38 +56,31 @@
             dialog: false,
             headers: [
                 {
-                    text: 'Dessert (100g serving)',
+                    text: 'Message',
                     align: 'start',
                     sortable: false,
                     value: 'name',
                 },
-                {text: 'Calories', value: 'calories'},
-                {text: 'Fat (g)', value: 'fat'},
-                {text: 'Carbs (g)', value: 'carbs'},
-                {text: 'Protein (g)', value: 'protein'},
-                {text: 'Actions', value: 'actions', sortable: false},
+                {text: 'Uuid', value: 'uuid'},
+                {text: 'Status', value: 'stat'},
+                {text: 'Errors', value: 'info', sortable: false},
             ],
             desserts: [],
-            editedIndex: -1,
             editedItem: {
                 name: '',
-                calories: 0,
-                fat: 0,
-                carbs: 0,
-                protein: 0,
+                uuid: 0,
+                stat: 0,
             },
             defaultItem: {
                 name: '',
-                calories: 0,
-                fat: 0,
-                carbs: 0,
-                protein: 0,
+                uuid: 0,
+                stat: 0,
             },
         }),
 
         computed: {
             formTitle() {
-                return this.editedIndex === -1 ? 'Сообщение об ошибке' : 'Сообщение об ошибке'
+                return 'Code { number }'
             },
         },
 
@@ -111,43 +102,33 @@
             initialize() {
                 this.desserts = [
                     {
-                        name: 'Frozen Yogurt',
-                        calories: 159,
-                        fat: 6.0,
-                        carbs: 24,
-                        protein: 4.0,
+                        name: 'Message 1',
+                        uuid: '0d809103-85a5-467a-a629-76f569ca0c07',
+                        stat: 'Success',
                         status: true
                     },
                     {
-                        name: 'Ice cream sandwich',
-                        calories: 237,
-                        fat: 9.0,
-                        carbs: 37,
-                        protein: 4.3,
+                        name: 'Message 2',
+                        uuid: '716ce0c1-8cb0-4811-8dd9-eb64e0a186a6',
+                        stat: 'Error',
                         status: false
                     },
                     {
-                        name: 'Ice cream sandwich',
-                        calories: 237,
-                        fat: 9.0,
-                        carbs: 37,
-                        protein: 4.3,
+                        name: 'Message 3',
+                        uuid: 'd0467040-4ae5-4152-8289-0806f9784d76',
+                        stat: 'Error',
                         status: false
                     },
                     {
-                        name: 'Ice cream sandwich',
-                        calories: 159,
-                        fat: 9.0,
-                        carbs: 37,
-                        protein: 4.3,
+                        name: 'Message 4',
+                        uuid: '8e41fb4e-34ee-41f3-9a31-35385b5bd4e0',
+                        stat: 'Success',
                         status: true
                     },
                     {
-                        name: 'Ice cream sandwich',
-                        calories: 159,
-                        fat: 9.0,
-                        carbs: 37,
-                        protein: 4.3,
+                        name: 'Message 5',
+                        uuid: 'bfb0ae42-b178-4128-9576-23dbd1025646',
+                        stat: 'Success',
                         status: true
                     },
                 ]
@@ -163,7 +144,6 @@
                 this.dialog = false
                 this.$nextTick(() => {
                     this.editedItem = Object.assign({}, this.defaultItem)
-                    this.editedIndex = -1
                 })
             },
 
