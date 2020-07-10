@@ -33,15 +33,17 @@
                 </v-toolbar>
             </template>
             <template v-slot:item.actions="{ item }">
-                <v-btn :disabled="isDisabled ? true : false"
-                        color="green darken-1"
-                        dark
-                        class="mb-2"
-                        v-bind="attrs"
-                        v-on="on"
-                        @click="openMessage(item)"
+             <span v-if=item.status>
+                <v-btn
+                       color="green darken-3"
+                       dark
+                       class="mb-2"
+                       v-bind="attrs"
+                       v-on="on"
+                       @click="openMessage(item)"
                 >More
                 </v-btn>
+             </span>
             </template>
         </v-data-table>
     </v-container>
@@ -51,7 +53,7 @@
     export default {
         data: () => ({
             data: {
-                disabled: 159,
+                disabled: true,
             },
             dialog: false,
             headers: [
@@ -89,10 +91,6 @@
             formTitle() {
                 return this.editedIndex === -1 ? 'Сообщение об ошибке' : 'Сообщение об ошибке'
             },
-            isDisabled(dessert) {
-                if (dessert.calories === 159) return true
-                    else return false
-            }
         },
 
         watch: {
@@ -107,13 +105,9 @@
 
         methods: {
             getDesertColor(dessert) {
-                if (dessert.calories === 159) return "green"
+                if (dessert.status === true) return "green"
                 else return "red"
             },
-            // isDisable(dessert) {
-            //     if (dessert.calories === 159) return true
-            //     else return false
-            // },
             initialize() {
                 this.desserts = [
                     {
@@ -122,6 +116,7 @@
                         fat: 6.0,
                         carbs: 24,
                         protein: 4.0,
+                        status: true
                     },
                     {
                         name: 'Ice cream sandwich',
@@ -129,6 +124,7 @@
                         fat: 9.0,
                         carbs: 37,
                         protein: 4.3,
+                        status: false
                     },
                     {
                         name: 'Ice cream sandwich',
@@ -136,6 +132,7 @@
                         fat: 9.0,
                         carbs: 37,
                         protein: 4.3,
+                        status: false
                     },
                     {
                         name: 'Ice cream sandwich',
@@ -143,6 +140,7 @@
                         fat: 9.0,
                         carbs: 37,
                         protein: 4.3,
+                        status: true
                     },
                     {
                         name: 'Ice cream sandwich',
@@ -150,6 +148,7 @@
                         fat: 9.0,
                         carbs: 37,
                         protein: 4.3,
+                        status: true
                     },
                 ]
             },
