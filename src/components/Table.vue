@@ -9,7 +9,6 @@
                 :item-class="item => getDesertColor(item)"
         >
             <template v-slot:top>
-                <template>
                     <v-container grid-list-md>
                         <v-layout row wrap>
                             <v-flex xs12 lg6>
@@ -64,21 +63,15 @@
                                                        first-day-of-week="1"
                                                        color="green"
                                         >
-
                                         </v-date-picker>
                                     </v-menu>
                                 </v-flex>
 
                         </v-layout>
                     </v-container>
-                </template>
                 <v-toolbar flat color="white">
                     <v-toolbar-title>Table</v-toolbar-title>
-                    <v-divider
-                            class="mx-4"
-                            inset
-                            vertical
-                    ></v-divider>
+
                     <v-dialog v-model="dialog" max-width="500px">
                         <v-card>
                             <v-card-title>
@@ -103,6 +96,7 @@
                        v-bind="attrs"
                        v-on="on"
                        @click="openMessage(item)"
+                       style="top:5px"
                 >More
                 </v-btn>
             </template>
@@ -111,6 +105,7 @@
 </template>
 
 <script>
+    import Filter from "./Filter";
     export default {
         data: () => ({
             data: {
@@ -119,28 +114,31 @@
                 dateEnd: new Date().toISOString().substr(0, 10),
                 menu2: false,
             },
+            components: {
+              Filter
+            },
             dialog: false,
             headers: [
                 {
-                    text: 'Message',
+                    text: 'oid организации',
                     align: 'start',
                     sortable: false,
-                    value: 'name',
+                    value: 'oid',
                 },
                 {text: 'Uuid', value: 'uuid'},
-                {text: 'Status', value: 'stat'},
-                {text: 'Creation date', value: 'dateCreate', sortable: false},
-                {text: 'Errors', value: 'info', sortable: false},
+                {text: 'Статус', value: 'stat'},
+                {text: 'Дата', value: 'dateCreate', sortable: false},
+                {text: 'Ошибки', value: 'info', sortable: false},
             ],
             desserts: [],
             editedItem: {
-                name: '',
+                oid: '',
                 uuid: 0,
                 stat: 0,
                 createDate: null
             },
             defaultItem: {
-                name: '',
+                oid: '',
                 uuid: 0,
                 stat: 0,
             },
@@ -149,7 +147,7 @@
 
         computed: {
             formTitle() {
-                return 'Code { number }'
+                return 'Code {{ number }}'
             },
         },
 
@@ -180,37 +178,37 @@
             initialize() {
                 this.desserts = [
                     {
-                        name: 'Message 1',
+                        oid: '1.2.643.6.17.1',
                         uuid: '0d809103-85a5-467a-a629-76f569ca0c07',
-                        stat: 'Success',
+                        stat: 'Ок',
                         status: true,
-                        dateCreate: new Date('2020, 8, 13')
+                        dateCreate: new Date('2020, 5, 9')
                     },
                     {
-                        name: 'Message 2',
+                        oid: '1.2.643.6.7',
                         uuid: '716ce0c1-8cb0-4811-8dd9-eb64e0a186a6',
-                        stat: 'Error',
+                        stat: 'Ошибка',
                         status: false,
                         dateCreate: new Date('2020, 6, 13')
                     },
                     {
-                        name: 'Message 3',
+                        oid: '1.2.643.6.15',
                         uuid: 'd0467040-4ae5-4152-8289-0806f9784d76',
-                        stat: 'Error',
+                        stat: 'Ошибка',
                         status: false,
                         dateCreate: new Date('2020, 5, 17')
                     },
                     {
-                        name: 'Message 4',
+                        oid: '1.2.643.3.241',
                         uuid: '8e41fb4e-34ee-41f3-9a31-35385b5bd4e0',
-                        stat: 'Success',
+                        stat: 'Ок',
                         status: true,
                         dateCreate: new Date('2019, 3, 2')
                     },
                     {
-                        name: 'Message 5',
+                        oid: '1.2.643.0.2',
                         uuid: 'bfb0ae42-b178-4128-9576-23dbd1025646',
-                        stat: 'Success',
+                        stat: 'Ок',
                         status: true,
                         dateCreate: new Date('2021, 2, 7')
                     },
