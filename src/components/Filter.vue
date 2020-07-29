@@ -5,21 +5,7 @@
     >
         <v-system-bar></v-system-bar>
 
-        <v-toolbar
-                flat
-                color="transparent"
-        >
-            <v-btn icon>
-                <v-icon>mdi-arrow-left</v-icon>
-            </v-btn>
 
-            <v-text-field
-                    v-model="search"
-                    append-icon="mdi-magnify"
-                    label="Search News"
-                    single-line
-            ></v-text-field>
-        </v-toolbar>
 
         <v-card-text class="py-0">
             <v-chip

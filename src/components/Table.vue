@@ -1,5 +1,18 @@
 <template>
     <v-container>
+
+        <v-toolbar
+                flat
+                color="transparent"
+        >
+
+            <v-text-field
+                    v-model="filter"
+                    append-icon="mdi-magnify"
+                    label="Поиск..."
+                    single-line
+            ></v-text-field>
+        </v-toolbar>
         <v-data-table
                 :headers="headers"
                 :items="desserts"
@@ -21,6 +34,7 @@
                                         full-width
                                         min-width="290px"
                                 >
+
                                     <template v-slot:activator="{ on }">
                                         <v-text-field
                                                 v-model="data.dateStart"
@@ -105,17 +119,14 @@
 </template>
 
 <script>
-    import Filter from "./Filter";
     export default {
         data: () => ({
+            filter: 'all',
             data: {
                 disabled: true,
                 dateStart: new Date().toISOString().substr(0, 10),
                 dateEnd: new Date().toISOString().substr(0, 10),
                 menu2: false,
-            },
-            components: {
-              Filter
             },
             dialog: false,
             headers: [
@@ -149,6 +160,17 @@
             formTitle() {
                 return 'Code {{ number }}'
             },
+            // filtered() {
+            //   if (this.filter === 'all') {
+            //       return this.desserts
+            //   }
+            //     if (this.filter === 'false') {
+            //         return this.desserts.filtered(t => t.status)
+            //     }
+            //     if (this.filter === 'true') {
+            //         return this.desserts.filtered(t => !t.status)
+            //     }
+            // },
         },
 
         watch: {

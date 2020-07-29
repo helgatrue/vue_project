@@ -6,8 +6,8 @@
       dark
     >
     </v-app-bar>
-
     <v-content>
+
       <Table/>
     </v-content>
   </v-app>
@@ -20,7 +20,7 @@ export default {
   name: 'App',
 
   components: {
-    Table,
+    Table
   },
 
   data: () => ({
