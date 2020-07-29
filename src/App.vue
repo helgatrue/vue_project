@@ -1,4 +1,4 @@
-<template>
+<template v-slot:header>
   <v-app>
     <v-app-bar
       app
@@ -6,8 +6,7 @@
       dark
     >
     </v-app-bar>
-    <v-content>
-
+        <v-content>
       <Table/>
     </v-content>
   </v-app>

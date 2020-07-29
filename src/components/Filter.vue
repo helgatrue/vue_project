@@ -1,12 +1,8 @@
 <template>
     <v-card
-            class="mx-auto mt-12"
+            class="mt-12"
             max-width="450"
     >
-        <v-system-bar></v-system-bar>
-
-
-
         <v-card-text class="py-0">
             <v-chip
                     v-for="(keyword, i) in keywords"
@@ -24,19 +20,12 @@
                     ripple
                     @click="() => {}"
             >
-                <v-img
-                        :src="item.image"
-                        class="mr-4"
-                        max-width="64"
-                        min-width="64"
-                ></v-img>
 
                 <v-list-item-content>
           <span
                   class="text-uppercase font-weight-regular caption"
                   v-text="item.category"
           ></span>
-
                     <div v-text="item.title"></div>
                 </v-list-item-content>
             </v-list-item>

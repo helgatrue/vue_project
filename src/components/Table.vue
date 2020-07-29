@@ -1,21 +1,18 @@
 <template>
     <v-container>
 
-        <v-toolbar
-                flat
-                color="transparent"
-        >
-
-            <v-text-field
-                    v-model="filter"
-                    append-icon="mdi-magnify"
-                    label="Поиск..."
-                    single-line
-            ></v-text-field>
-        </v-toolbar>
+        <v-text-field
+                style="margin-left: 70%"
+                v-model="filterDessertParameter"
+                clearable
+                hide-details
+                prepend-inner-icon="search"
+                label="Найти..."
+        @input="search">
+        </v-text-field>
         <v-data-table
                 :headers="headers"
-                :items="desserts"
+                :items="filteredDessertsList"
                 sort-by="calories"
                 class="elevation-1"
                 :hide-default-footer="true"
@@ -121,7 +118,14 @@
 <script>
     export default {
         data: () => ({
-            filter: 'all',
+            filter: {},
+            sortBy: 'name',
+            keys: [
+                'Uuid',
+                'Статус',
+                'Дата',
+                'Ошибки',
+            ],
             data: {
                 disabled: true,
                 dateStart: new Date().toISOString().substr(0, 10),
@@ -131,7 +135,7 @@
             dialog: false,
             headers: [
                 {
-                    text: 'oid организации',
+                    text: 'OID организации',
                     align: 'start',
                     sortable: false,
                     value: 'oid',
@@ -153,24 +157,16 @@
                 uuid: 0,
                 stat: 0,
             },
+            filterDessertParameter: "",
+            filteredDessertsList: [],
         }),
-
-
         computed: {
             formTitle() {
                 return 'Code {{ number }}'
             },
-            // filtered() {
-            //   if (this.filter === 'all') {
-            //       return this.desserts
-            //   }
-            //     if (this.filter === 'false') {
-            //         return this.desserts.filtered(t => t.status)
-            //     }
-            //     if (this.filter === 'true') {
-            //         return this.desserts.filtered(t => !t.status)
-            //     }
-            // },
+            filteredKeys () {
+                return this.keys.filter(key => key !== `Name`)
+            },
         },
 
         watch: {
@@ -190,9 +186,25 @@
             this.data.dateEnd = new Date (
                 Math.max.apply(null, dates)
             ).toISOString().substr(0, 10);
+
+
         },
 
         methods: {
+            search() {
+                if (!this.filterDessertParameter) {
+                    this.filteredDessertsList = this.desserts
+                } else {
+                    this.filteredDessertsList = this.desserts.filter(dessert => {
+                        return dessert.oid(this.filteredDessertsList)
+                        // dessert.oid.contains(this.filterParameter) ||
+                        // dessert.uuid.contains(this.filterParameter) ||
+                        // dessert.stat.contains(this.filterParameter) ||
+                        // dessert.status.contains(this.filterParameter) ||
+                        // dessert.dateCreate.toDateString().contains(this.filterParameter)
+                    })
+                }
+            },
             getDesertColor(dessert) {
                 if (dessert.status === true) return "green"
                 else return "red"
@@ -235,6 +247,7 @@
                         dateCreate: new Date('2021, 2, 7')
                     },
                 ]
+                this.filteredDessertsList = this.desserts;
             },
 
             openMessage(item) {
