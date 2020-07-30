@@ -10,6 +10,7 @@
                 label="Найти..."
         @input="search">
         </v-text-field>
+        <h1>{{this.filterDessertParameter}}</h1>
         <v-data-table
                 :headers="headers"
                 :items="filteredDessertsList"
@@ -196,12 +197,12 @@
                     this.filteredDessertsList = this.desserts
                 } else {
                     this.filteredDessertsList = this.desserts.filter(dessert => {
-                        return dessert.oid(this.filteredDessertsList)
-                        // dessert.oid.contains(this.filterParameter) ||
-                        // dessert.uuid.contains(this.filterParameter) ||
-                        // dessert.stat.contains(this.filterParameter) ||
-                        // dessert.status.contains(this.filterParameter) ||
-                        // dessert.dateCreate.toDateString().contains(this.filterParameter)
+                        let lowerFilterParam = this.filterDessertParameter.toLowerCase();
+                        let isFiltered = dessert.oid.toLowerCase().includes(lowerFilterParam) ||
+                        dessert.uuid.toLowerCase().includes(lowerFilterParam) ||
+                        dessert.stat.toLowerCase().includes(lowerFilterParam) ||
+                        dessert.dateCreate.toDateString().toLowerCase().includes(lowerFilterParam);
+                        return isFiltered;
                     })
                 }
             },
