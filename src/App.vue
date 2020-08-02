@@ -6,9 +6,9 @@
       dark
     >
     </v-app-bar>
-        <v-content>
+        <v-main>
       <Table/>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
